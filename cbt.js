@@ -3,6 +3,7 @@ const input = document.getElementById("input");
 const currenttime = document.getElementById("currenttime")
 const besttime = document.getElementById("besttime")
 const xoffset = "25vw";
+let skipbuffer = [];
 let inputText = "";
 let startTime = null;
 
@@ -67,10 +68,38 @@ function updateTimer() {
     }
 }
 
+function skips() {
+    // Clean skipbuffer
+    skipbuffer = skipbuffer.filter(([_, t]) => new Date().getTime() - t < 10000);
+
+    // AAI:
+    // must be between /\bt\w+ i/i
+    // skips 60 letters
+    // 5 second window
+    // TODO
+
+    // DEER:
+    // next requested letters must be /is/i
+    // skips 4 words
+    if (
+        templatediv.innerText
+            .slice(inputText.length - 4, inputText.length - 2)
+            .toLowerCase() === 'is'
+        && inputText
+            .slice(-4)
+            .toLowerCase() === 'deer'
+        && templatediv.innerText.startsWith(inputText.slice(0, -4))
+    ) {
+        inputText = templatediv.innerText.slice(0, inputText.length)
+            + templatediv.innerText.slice(inputText.length).split(' ').slice(0, 4).join(' ');
+    }
+}
+
 setX();
 loadBestTime();
 
 document.onkeydown = function (event) {
+    skipbuffer.push([event, new Date().getTime()]);
     if (event.key === "Backspace") {
         inputText = inputText.slice(0, -1);
     } else {
@@ -79,6 +108,7 @@ document.onkeydown = function (event) {
             inputText += event.key;
         }
     }
+    skips();
     input.innerText = inputText;
     const misspelled = !templatediv.innerText.startsWith(inputText);
     input.style.backgroundColor = misspelled ? "#a00000" : "#00000000";
