@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>
+        cbtspeedrun
+    </title>
+</head>
+
+<body>
+
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Rubik", sans-serif;
+            background: black;
+            color: white;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .cbt {
+            position: absolute;
+            font-size: 15vh;
+            top: 30%;
+            white-space: nowrap;
+        }
+
+        .timer {
+            font-weight: 300;
+        }
+
+        #templatediv {
+            color: gray;
+        }
+
+        #input {
+            color: white;
+        }
+
+        #footer {
+            bottom: 0%;
+            position: fixed;
+            font-size: 3vh;
+        }
+    </style>
+
+    <div class="cbt" id="templatediv">Loading...</div>
+    <div class="cbt" id="input"></div>
+
+    <div id="footer">
+        <div id="currenttime" class="timer"></div>
+        <div id="besttime" class="timer"></div>
+    </div>
+
+    <script src="cbt.js"></script>
+
+</body>
+
+</html>
