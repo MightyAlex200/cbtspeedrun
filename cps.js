@@ -8,6 +8,7 @@ let inputText = "";
 let startTime = null;
 
 const filename = new URL(location.href).searchParams.get("file") || "cbt.txt";
+const storageKey = 'besttime-' + filename;
 
 fetch(filename).then(a => a.text()).then(articletext => {
     templatediv.innerText = articletext.replace(/\n/g, ' ');
@@ -38,7 +39,7 @@ function getTimeStr(time) {
 }
 
 function loadBestTime() {
-    const bt = localStorage.getItem('besttime');
+    const bt = localStorage.getItem(storageKey);
     if (bt && !Number.isNaN(Number(bt))) {
         besttime.innerText = `Personal best: ${getTimeStr(Number(bt))}`;
     }
@@ -55,9 +56,9 @@ function updateTimer() {
 
     currenttime.innerText = `Current time: ${getTimeStr(time)}`;
     if (inputText === templatediv.innerText) {
-        const bt = localStorage.getItem('besttime');
+        const bt = localStorage.getItem(storageKey);
         if (!bt || Number(bt) > time) {
-            localStorage.setItem('besttime', time.toString());
+            localStorage.setItem(storageKey, time.toString());
         }
 
         startTime = null;
