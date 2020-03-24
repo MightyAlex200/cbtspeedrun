@@ -7,7 +7,9 @@ let skipbuffer = [];
 let inputText = "";
 let startTime = null;
 
-fetch("cbt.txt").then(a => a.text()).then(articletext => {
+const filename = new URL(location.href).searchParams.get("file") || "cbt.txt";
+
+fetch(filename).then(a => a.text()).then(articletext => {
     templatediv.innerText = articletext.replace(/\n/g, ' ');
 });
 
